@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>रसोई प्लानर</title>
+<meta name="description" content="Plan, narrate, film and upload a recipe video.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#E39B1B">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="रसोई प्लानर">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="bar">
+  <button id="back" class="icon-btn" hidden aria-label="वापस">&#8592;</button>
+  <div class="bar-title">
+    <strong id="barTitle">रसोई प्लानर</strong>
+    <span id="barSub">Sultana &amp; Daughter&rsquo;s Kitchen</span>
+  </div>
+  <span id="offline" class="pill" hidden>ऑफ़लाइन</span>
+</header>
+
+<!-- ============ LIST ============ -->
+<main id="listView" class="wrap">
+  <p class="lede">हर वीडियो के लिए: क्या शूट करना है, क्या बोलना है, और अपलोड में क्या भरना है।
+    <span class="en">Everything for one video — what to film, what to say, what to type when uploading.</span></p>
+
+  <button id="newVideo" class="big-btn">+ नया वीडियो <span class="en-inline">New video</span></button>
+
+  <div id="videoList" class="list"></div>
+
+  <div id="emptyState" class="empty" hidden>
+    <p>अभी कोई वीडियो नहीं है।</p>
+    <p class="en">No videos yet. Tap &ldquo;New video&rdquo; to plan your first one.</p>
+  </div>
+
+  <section class="reminder">
+    <h2>क्या काम कर रहा है</h2>
+    <p class="en">What the channel&rsquo;s own numbers say, as of 20 October:</p>
+    <ul>
+      <li><b>छोटे वीडियो ज़्यादा चलते हैं।</b> <span class="en">17–22 second videos were watched to
+        71–83% and got the most views. Longer ones got far fewer.</span></li>
+      <li><b>लोग देखते हैं, पर सब्सक्राइब नहीं करते।</b> <span class="en">2,556 views produced zero net
+        subscribers. Watching isn&rsquo;t the problem — giving people a reason to come back is.</span></li>
+      <li><b>इसलिए बोलना ज़रूरी है।</b> <span class="en">Your voice is what makes a video yours rather than
+        one of a thousand identical clips. That&rsquo;s what the script step is for.</span></li>
+    </ul>
+  </section>
+</main>
+
+<!-- ============ DETAIL ============ -->
+<main id="detailView" class="wrap" hidden>
+  <nav class="steps" id="steps">
+    <button data-step="plan" class="on">1 जानकारी</button>
+    <button data-step="script">2 बोलना</button>
+    <button data-step="film">3 शूट</button>
+    <button data-step="publish">4 अपलोड</button>
+    <button data-step="after">5 नतीजा</button>
+  </nav>
+
+  <!-- 1 PLAN -->
+  <section class="step" data-panel="plan">
+    <h2>रेसिपी की जानकारी</h2>
+    <p class="en">Fill this in once. Everything else is made from it.</p>
+    <div class="card">
+      <label class="f"><span class="l">डिश का नाम <small>Dish name</small></span>
+        <input type="text" id="dish" autocomplete="off" placeholder="Caramel Kheer"></label>
+      <label class="f"><span class="l">इसमें ख़ास क्या है? <small>What&rsquo;s different</small></span>
+        <input type="text" id="promise" autocomplete="off" placeholder="बिना कंडेंस्ड मिल्क"></label>
+      <label class="f"><span class="l">किस तरह की रेसिपी <small>Type</small></span>
+        <select id="pillar">
+          <option value="regional">बिहारी / घरेलू खाना</option>
+          <option value="quick_sweets">मीठा और शरबत</option>
+          <option value="festival">त्योहार स्पेशल</option>
+        </select></label>
+      <label class="f"><span class="l">सामग्री <small>Ingredients — one per line</small></span>
+        <textarea id="ingredients" rows="5" placeholder="1 लीटर दूध&#10;1/2 कप चावल"></textarea></label>
+      <label class="f"><span class="l">विधि <small>Steps — one per line</small></span>
+        <textarea id="steps_" rows="6" placeholder="दूध उबालिए&#10;चावल डालकर 20 मिनट पकाइए"></textarea></label>
+      <div class="row3">
+        <label class="f"><span class="l">तैयारी <small>min</small></span><input type="number" id="prep" min="0" inputmode="numeric"></label>
+        <label class="f"><span class="l">पकाना <small>min</small></span><input type="number" id="cook" min="0" inputmode="numeric"></label>
+        <label class="f"><span class="l">लोग <small>serves</small></span><input type="number" id="serves" min="0" inputmode="numeric"></label>
+      </div>
+      <label class="f"><span class="l">टिप <small>Tip (optional)</small></span>
+        <input type="text" id="tip" autocomplete="off"></label>
+    </div>
+    <button id="deleteVideo" class="ghost danger">यह वीडियो हटाइए <span class="en-inline">Delete this video</span></button>
+  </section>
+
+  <!-- 2 SCRIPT -->
+  <section class="step" data-panel="script" hidden>
+    <h2>क्या बोलना है</h2>
+    <p class="en">Read this out loud while you film, or play the video back and record over it.
+      You don&rsquo;t have to improvise.</p>
+    <div id="fitAdvice" class="advice"></div>
+    <div id="scriptLines" class="script"></div>
+    <div class="btn-row">
+      <button id="copyScript" class="primary">स्क्रिप्ट कॉपी <span class="en-inline">Copy script</span></button>
+      <button id="bigRead" class="ghost">बड़ा करके पढ़िए <span class="en-inline">Read big</span></button>
+    </div>
+    <p class="note en">Quantities are left out on purpose — they&rsquo;re on screen and in the description.
+      Saying &ldquo;half a cup of sugar&rdquo; out loud just slows the video down.</p>
+  </section>
+
+  <!-- 3 FILM -->
+  <section class="step" data-panel="film" hidden>
+    <h2>शूट करते समय</h2>
+    <div id="lengthHint" class="advice"></div>
+    <div class="checks" id="filmChecks"></div>
+  </section>
+
+  <!-- 4 PUBLISH -->
+  <section class="step" data-panel="publish" hidden>
+    <h2>अपलोड के लिए</h2>
+    <div id="warns" class="warns"></div>
+    <div class="out">
+      <div class="out-head"><h3>टाइटल <small>Title</small></h3><button class="primary" data-copy="outTitle">कॉपी</button></div>
+      <textarea id="outTitle" readonly rows="2"></textarea>
+      <div class="meter" id="meter"><i></i></div>
+      <div class="meter-label"><span id="titleCount"></span><span>60 तक</span></div>
+    </div>
+    <div class="out">
+      <div class="out-head"><h3>डिस्क्रिप्शन <small>Description</small></h3><button class="primary" data-copy="outDesc">कॉपी</button></div>
+      <textarea id="outDesc" readonly></textarea>
+    </div>
+    <div class="out">
+      <div class="out-head"><h3>टैग <small>Tags</small></h3><span id="tagCount" class="count"></span><button class="primary" data-copy="outTags">कॉपी</button></div>
+      <textarea id="outTags" readonly></textarea>
+    </div>
+    <div class="checks" id="uploadChecks"></div>
+  </section>
+
+  <!-- 5 AFTER -->
+  <section class="step" data-panel="after" hidden>
+    <h2>48 घंटे बाद</h2>
+    <p class="en">Open the video in YouTube Studio → Analytics and write down two numbers.</p>
+    <div class="card">
+      <label class="f"><span class="l">कितने लोग रुके <small>Viewed vs swiped away — %</small></span>
+        <input type="number" id="afterStayed" min="0" max="100" inputmode="numeric"></label>
+      <label class="f"><span class="l">कितना देखा <small>Average percentage viewed</small></span>
+        <input type="number" id="afterWatched" min="0" max="100" inputmode="numeric"></label>
+      <label class="f"><span class="l">व्यूज़ <small>Views</small></span>
+        <input type="number" id="afterViews" min="0" inputmode="numeric"></label>
+    </div>
+    <div id="afterVerdict" class="advice"></div>
+    <p class="note en">Channel baselines: about 31% of people stay past the opening, and those who stay
+      watch 32–42% on average. The 17–22 second videos reached 71–83%.</p>
+  </section>
+</main>
+
+<div id="bigOverlay" class="overlay" hidden>
+  <button id="closeBig" class="icon-btn close" aria-label="बंद">&times;</button>
+  <div id="bigText" class="big-text"></div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>

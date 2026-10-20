@@ -1,0 +1,17 @@
+{
+  "name": "रसोई प्लानर — Sultana & Daughter's Kitchen",
+  "short_name": "रसोई प्लानर",
+  "description": "Plan, narrate, film and upload a recipe video.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F2F4F2",
+  "theme_color": "#E39B1B",
+  "lang": "hi",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
